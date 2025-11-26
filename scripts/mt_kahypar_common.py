@@ -174,6 +174,7 @@ def print_result(algorithm, args):
   assert _result_initialized, "set_result_vals must be called before print_result"
   timeout = _result_values["timeout"]
   failed = _result_values["failed"]
+  constraints_met = _result_values["constraints_met"]
   imbalance = _result_values["imbalance"]
   total_time = _result_values["total_time"]
   km1 = _result_values["km1"]
@@ -184,6 +185,7 @@ def print_result(algorithm, args):
   del _result_values["total_time"]
   del _result_values["km1"]
   del _result_values["cut"]
+  del _result_values["constraints_met"]
   print(algorithm,
         ntpath.basename(args.graph),
         timeout,
@@ -197,13 +199,14 @@ def print_result(algorithm, args):
         km1,
         cut,
         failed,
+        constraints_met,
         # note: the iteration order of a dict matches the insertion order
         # (guaranteed since python 3.7)
         *_result_values.values().__iter__(),
         sep=",")
 
   if args.header != "":
-    header = ["algorithm", "graph", "timeout", "seed", "k", "epsilon", "num_threads", "imbalance", "totalPartitionTime", "objective", "km1", "cut", "failed"]
+    header = ["algorithm", "graph", "timeout", "seed", "k", "epsilon", "num_threads", "imbalance", "totalPartitionTime", "objective", "km1", "cut", "failed", "constraints_met"]
     if args.tag:
       header.insert(0, "tag")
     header.extend(_result_values.keys())

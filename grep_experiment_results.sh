@@ -1,5 +1,5 @@
 experiment_dir=$1
-HEAD="algorithm,graph,timeout,seed,k,epsilon,num_threads,imbalance,totalPartitionTime,objective,km1,cut,failed"
+HEAD="algorithm,graph,timeout,seed,k,epsilon,num_threads,imbalance,totalPartitionTime,objective,km1,cut,failed,constraints_met"
 
 mkdir experimental_results
 for result_folder in $experiment_dir/*_results;
