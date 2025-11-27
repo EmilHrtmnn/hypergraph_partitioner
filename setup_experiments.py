@@ -99,7 +99,7 @@ def partitioner_call(is_serial, partitioner, instance, threads, k, epsilon, seed
   if constraint_file:
     if not args:
       args = ""
-    args += f"-n {constraint_file}"
+    args += f" -n {constraint_file}"
   if args is not None:
     assert "'" not in args
     call += f" --args ' {args}'"
