@@ -1,11 +1,11 @@
 #!/usr/bin/python3
-from typing import List
+from typing import List, Union
 
 class Partitioner:
     def __init__(
         self,
         script: str,
-        format: str | List[str],
+        format: Union[str, List[str]],
         *,
         parallel: bool,
         dynamic_header: bool = False,
