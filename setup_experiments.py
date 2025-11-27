@@ -35,7 +35,7 @@ def get_all_scotch_instances(dir):
   return [dir + "/" + graph for graph in os.listdir(dir) if graph.endswith('.scotch')]
 
 def get_matching_constraint_file(dir, hg, k):
-  return dir + "/" + hg + "." + str(k) +  ".constraints.txt"
+  return dir + "/" + os.path.basename(hg) + "." + str(k) +  ".constraints.txt"
 
 def get_all_benchmark_instances_in_directory(input_format, instance_dir):
   if input_format == "hmetis" or input_format == "patoh":
