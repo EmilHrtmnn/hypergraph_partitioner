@@ -34,6 +34,9 @@ def get_all_graph_instances(dir):
 def get_all_scotch_instances(dir):
   return [dir + "/" + graph for graph in os.listdir(dir) if graph.endswith('.scotch')]
 
+def get_matching_constraint_file(dir, hg, k):
+  return dir + "/" + hg + "." + k +  ".constraints.txt"
+
 def get_all_benchmark_instances_in_directory(input_format, instance_dir):
   if input_format == "hmetis" or input_format == "patoh":
     return get_all_hypergraph_instances(instance_dir)
@@ -84,7 +87,7 @@ def parallel_partitioner_call(partitioner, instance, threads, k, epsilon, seed, 
     + " " + str(threads) + " " + str(k) + " " + str(epsilon) + " " + str(seed) + " " + str(objective) + " " + str(timelimit)
   )
 
-def partitioner_call(is_serial, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag):
+def partitioner_call(is_serial, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag, constraint_file):
   if is_serial:
     call = serial_partitioner_call(partitioner, instance, k, epsilon, seed, objective, timelimit)
   else:
@@ -93,6 +96,10 @@ def partitioner_call(is_serial, partitioner, instance, threads, k, epsilon, seed
     call += " --config " + config_file
   if algorithm_name != "":
     call += " --name " + algorithm_name
+  if constraint_file:
+    if not args:
+      args = ""
+    args += f"-n {constraint_file}"
   if args is not None:
     assert "'" not in args
     call += f" --args ' {args}'"
@@ -182,9 +189,12 @@ try:
       for instance, tag in get_all_benchmark_instances(partitioner, config).items():
         for k in config["k"]:
           for threads in config["threads"]:
+            constraint_file = ""
+            if "constraint_instance_folder" in config:
+              constraint_file = get_matching_constraint_file(config["constraint_instance_folder"], instance, k)
             if is_serial_partitioner and threads > 1 and len(config["threads"]) > 1:
               continue
-            call = partitioner_call(is_serial_partitioner, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag)
+            call = partitioner_call(is_serial_partitioner, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag, constraint_file)
             header = None
             if write_partition_file:
               call += " --partition_folder=" + os.path.abspath(result_dir)
