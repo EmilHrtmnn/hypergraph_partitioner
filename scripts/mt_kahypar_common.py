@@ -160,7 +160,12 @@ def parse(result_line, key, *, out=None, parser=float):
 
 
 def parse_or_default(result_line, key, default, *, out=None, parser=float):
-  if not parse(result_line, key, out=out, parser=parser):
+  try:
+    if not parse(result_line, key, out=out, parser=parser):
+      if out is None:
+        out = key
+      _result_values[out] = default
+  except AssertionError:
     if out is None:
       out = key
     _result_values[out] = default
