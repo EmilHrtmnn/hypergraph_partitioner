@@ -2,7 +2,7 @@
 import os
 import os.path
 
-from mt_kahypar_common import (get_args, invalid, parse_or_default,
+from mt_kahypar_common import (get_args, invalid, parse_or_default, parse_if_present,
                                parse_required_value, print_call, print_result,
                                run_mtkahypar, set_result_vals)
 
@@ -34,7 +34,7 @@ if success:
   parse_required_value(result, "cut", parser=int)
   parse_required_value(result, "totalPartitionTime", out="total_time")
   parse_required_value(result, "imbalance")
-  parse_or_default(result, "constraints_met", default="", parser=str)
+  parse_if_present(result, "constraints_met", parser=str)
 
 if success is not None:
   print_result(algorithm, args)

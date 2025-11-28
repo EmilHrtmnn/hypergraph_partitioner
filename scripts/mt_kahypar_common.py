@@ -160,18 +160,23 @@ def parse(result_line, key, *, out=None, parser=float):
 
 
 def parse_or_default(result_line, key, default, *, out=None, parser=float):
-  try:
-    if not parse(result_line, key, out=out, parser=parser):
-      if out is None:
-        out = key
-      _result_values[out] = default
-  except AssertionError:
-    pass
+  if not parse(result_line, key, out=out, parser=parser):
+    if out is None:
+      out = key
+    _result_values[out] = default
 
 
 def parse_required_value(result_line, key, *, out=None, parser=float):
   if not parse(result_line, key, out=out, parser=parser):
     assert False, f"Required key {key} not contained in result line!"
+
+def parse_if_present(result_line, key, *, out=None, parser=float):
+  if out is None:
+    out = key
+  set_result_vals(out=invalid)
+  if not parse(result_line, key, out=out, parser=parser):
+    del _result_values[out]
+
 
 def print_result(algorithm, args):
   assert _result_initialized, "set_result_vals must be called before print_result"
