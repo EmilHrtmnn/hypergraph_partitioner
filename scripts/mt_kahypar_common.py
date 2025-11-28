@@ -205,8 +205,8 @@ def print_result(algorithm, args):
         *_result_values.values().__iter__(),
         sep=",")
 
-  if args.header != "":
-    header = ["algorithm", "graph", "timeout", "seed", "k", "epsilon", "num_threads", "imbalance", "totalPartitionTime", "objective", "km1", "cut", "failed", "constraints_met"]
+  if args.header != "": # header flag to indicate that header file should be written
+    header = ["algorithm", "graph", "timeout", "seed", "k", "epsilon", "num_threads", "imbalance", "totalPartitionTime", "objective", "km1", "cut", "failed"]
     if args.tag:
       header.insert(0, "tag")
     header.extend(_result_values.keys())

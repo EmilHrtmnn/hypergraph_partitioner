@@ -161,6 +161,9 @@ try:
     algorithm_file = '_'.join(list(map(lambda x: x.lower(), re.split(' |-', algorithm_file))))
     result_dir = experiment_dir + "/" + algorithm_file + "_results"
     os.makedirs(result_dir, exist_ok=True)
+    if "header" in config:
+      with open(partitioner_header(result_dir), "w") as header_file:
+        header_file.write(config["header"])
 
   for seed in config["seeds"]:
     for partitioner_config in config["config"]:
@@ -182,7 +185,7 @@ try:
       if "args" in partitioner_config:
         args = partitioner_config["args"]
       header = None
-      if dynamic_header and partitioner_mapping[partitioner].dynamic_header:
+      if dynamic_header and partitioner_mapping[partitioner].dynamic_header and "header" not in config:
         header = partitioner_header(result_dir)
 
       partitioner_calls = []
