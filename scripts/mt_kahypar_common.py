@@ -204,7 +204,7 @@ def print_result(algorithm, args):
         km1,
         cut,
         failed,
-        constraints_met,
+        constraints_met or None,
         # note: the iteration order of a dict matches the insertion order
         # (guaranteed since python 3.7)
         *_result_values.values().__iter__(),
