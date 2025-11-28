@@ -163,7 +163,7 @@ try:
     os.makedirs(result_dir, exist_ok=True)
     if "header" in config:
       with open(partitioner_header(result_dir), "w") as header_file:
-        header_file.write(config["header"])
+        header_file.write(config["header"] + "\n")
 
   for seed in config["seeds"]:
     for partitioner_config in config["config"]:

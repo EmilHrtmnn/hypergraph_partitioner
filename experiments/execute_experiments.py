@@ -5,6 +5,7 @@ import datetime
 import os
 import os.path
 import re
+import shutil
 
 
 # Print iterations progress
@@ -50,8 +51,10 @@ with open(args.experiment) as json_experiment:
       partitioner = partitioner_config["partitioner"]
       algorithm_name = partitioner
       if "name" in partitioner_config:
-        algorithm_name = partitioner_config["name"]
-      os.system("rm " + experiment_dir + "/" + algorithm_name + "_results/*")
+        algorithm_name = '_'.join(list(map(lambda x: x.lower(), re.split(' |-', partitioner_config["name"]))))
+      result_dir = experiment_dir + "/" + algorithm_name + "_results"
+      shutil.rmtree(result_dir, ignore_errors=True)
+      os.makedirs(result_dir, exist_ok=True)
 
     i = 0
     for partitioner_call in lines:
