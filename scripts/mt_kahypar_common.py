@@ -173,7 +173,7 @@ def parse_required_value(result_line, key, *, out=None, parser=float):
 def parse_if_present(result_line, key, *, out=None, parser=float):
   if out is None:
     out = key
-  set_result_vals(out=invalid)
+  _result_values.update({out: invalid})
   if not parse(result_line, key, out=out, parser=parser):
     del _result_values[out]
 
