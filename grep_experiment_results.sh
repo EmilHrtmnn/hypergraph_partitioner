@@ -1,5 +1,6 @@
 experiment_dir=$1
-HEAD="algorithm,graph,timeout,seed,k,epsilon,num_threads,imbalance,totalPartitionTime,objective,km1,cut,failed,constraints_met"
+experiment_name="${experiment_dir#*_}"
+HEAD="algorithm,graph,timeout,seed,k,epsilon,num_threads,imbalance,totalPartitionTime,objective,km1,cut,failed"
 
 mkdir experimental_results
 for result_folder in $experiment_dir/*_results;
@@ -19,5 +20,5 @@ do
   mv $result_file experimental_results/
 done
 
-tar -cvf experimental_results.tar experimental_results/*
+tar -cvf ${experiment_name}_experimental_results.tar experimental_results/*
 rm -rf experimental_results
