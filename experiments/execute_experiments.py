@@ -78,6 +78,6 @@ with open(args.experiment) as json_experiment:
         os.system("cat \"" + header_file + "\" >> " + result_file)
       else:
         os.system("echo 'algorithm,graph,timeout,seed,k,epsilon,num_threads,imbalance,totalPartitionTime,objective,km1,cut,failed' >> " + result_file)
-      os.system("cat " + experiment_dir + "/" + args.experiment_name + "_results/* >> " + result_file)
+      os.system("cat " + experiment_dir + "/" + algorithm_name + "_results/* >> " + result_file)
 
 
