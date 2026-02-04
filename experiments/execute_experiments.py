@@ -53,7 +53,7 @@ with open(args.experiment) as json_experiment:
       algorithm_name = partitioner
       if "name" in partitioner_config:
         algorithm_name = '_'.join(list(map(lambda x: x.lower(), re.split(' |-', partitioner_config["name"]))))
-      result_dir = experiment_dir + "/" + args.experiment_name + "_results"
+      result_dir = experiment_dir + "/" + algorithm_name + "_results"
       shutil.rmtree(result_dir, ignore_errors=True)
       os.makedirs(result_dir, exist_ok=True)
 
@@ -71,7 +71,7 @@ with open(args.experiment) as json_experiment:
         algorithm_name = partitioner_config["name"]
       algorithm_name = '_'.join(list(map(lambda x: x.lower(), re.split(' |-', algorithm_name))))
       result_file = experiment_dir + "/" + args.experiment_name + ".csv"
-      header_file = experiment_dir + "/" + args.experiment_name + ".header.csv"
+      header_file = experiment_dir + "/" + algorithm_name + ".header.csv"
       if os.path.exists(result_file):
         os.remove(result_file)
       if os.path.exists(header_file):
