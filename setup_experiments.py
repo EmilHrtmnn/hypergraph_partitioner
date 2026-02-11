@@ -34,8 +34,8 @@ def get_all_graph_instances(dir):
 def get_all_scotch_instances(dir):
   return [dir + "/" + graph for graph in os.listdir(dir) if graph.endswith('.scotch')]
 
-def get_matching_constraint_file(dir, hg, k):
-  return dir + "/" + os.path.basename(hg) + "." + str(k) +  ".constraints.txt"
+def get_matching_constraint_file(dir, hg, k, constraintTypeCount):
+  return dir + "/" + os.path.basename(hg) + "." + str(k) + "." + constraintTypeCount +  ".constraints.txt"
 
 def get_all_benchmark_instances_in_directory(input_format, instance_dir):
   if input_format == "hmetis" or input_format == "patoh":
@@ -194,7 +194,7 @@ try:
           for threads in config["threads"]:
             constraint_file = ""
             if "constraint_instance_folder" in config:
-              constraint_file = get_matching_constraint_file(config["constraint_instance_folder"], instance, k)
+              constraint_file = get_matching_constraint_file(config["constraint_instance_folder"], instance, k, algorithm_name)
             if is_serial_partitioner and threads > 1 and len(config["threads"]) > 1:
               continue
             call = partitioner_call(is_serial_partitioner, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag, constraint_file)
