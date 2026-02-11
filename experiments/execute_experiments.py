@@ -32,7 +32,6 @@ def printProgressBar (iteration, total, prefix = '', suffix = '', decimals = 1, 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("experiment", type=str)
-parser.add_argument("experiment_name", type=str)
 
 args = parser.parse_args()
 
@@ -40,7 +39,7 @@ with open(args.experiment) as json_experiment:
     config = json.load(json_experiment)
 
     now = datetime.datetime.now()
-    experiment_dir = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "_" + args.experiment_name
+    experiment_dir = str(now.year) + "-" + str(now.month) + "-" + str(now.day) + "_" + config["name"]
     workload_file = experiment_dir + "/workload.txt"
     num_lines = sum(1 for line in open(workload_file))
 
@@ -70,7 +69,7 @@ with open(args.experiment) as json_experiment:
       if "name" in partitioner_config:
         algorithm_name = partitioner_config["name"]
       algorithm_name = '_'.join(list(map(lambda x: x.lower(), re.split(' |-', algorithm_name))))
-      result_file = experiment_dir + "/" + args.experiment_name + ".csv"
+      result_file = experiment_dir + "/" + algorithm_name+ ".csv"
       header_file = experiment_dir + "/" + algorithm_name + ".header.csv"
       if os.path.exists(result_file):
         os.remove(result_file)
