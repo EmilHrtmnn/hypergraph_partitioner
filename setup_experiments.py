@@ -194,7 +194,7 @@ try:
           for threads in config["threads"]:
             constraint_file = ""
             if "constraint_instance_folder" in config:
-              constraint_file = get_matching_constraint_file(config["constraint_instance_folder"], instance, k, algorithm_name)
+              constraint_file = get_matching_constraint_file(config["constraint_instance_folder"], instance, k, algorithm_name.strip('"'))
             if is_serial_partitioner and threads > 1 and len(config["threads"]) > 1:
               continue
             call = partitioner_call(is_serial_partitioner, partitioner, instance, threads, k, epsilon, seed, objective, timelimit, config_file, algorithm_name, args, header, tag, constraint_file)
